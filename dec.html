@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Room Decoration</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f9f9f9, #e0f7fa);
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #004d40;
+      margin-bottom: 40px;
+    }
+
+    .event-box {
+      border: 2px solid #b2dfdb;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .event-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .event-box input[type="radio"] {
+      transform: scale(1.3);
+      margin-right: 15px;
+    }
+
+    .event-box label {
+      font-size: 18px;
+      flex: 1;
+      color: #00695c;
+    }
+
+    .event-box img {
+      width: 120px;
+      height: auto;
+      border-radius: 10px;
+      border: 2px solid #80cbc4;
+      margin-left: 20px;
+    }
+
+    button {
+      display: block;
+      margin: 30px auto 0;
+      background-color: #009688;
+      color: white;
+      padding: 12px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #00796b;
+    }
+  </style>
+</head>
+<body>
+  <h2>✨ Select Decoration for Your Room ✨</h2>
+
+  <form onsubmit="showAlert(event)">
+    <div class="event-box">
+      <input type="radio" id="birthday" name="event" value="Birthday">
+      <label for="birthday">Birthday (🎈 Balloons + Cake decor)</label>
+      <img src="C:\Users\hp\Downloads\bday.jpeg" alt="Birthday Decoration">
+    </div>
+
+    <div class="event-box">
+      <input type="radio" id="anniversary" name="event" value="Anniversary">
+      <label for="anniversary">Anniversary (❤️ Romantic lights + Roses)</label>
+      <img src="C:\Users\hp\Downloads\ann.jpeg" alt="Anniversary Decoration">
+    </div>
+
+    <div class="event-box">
+      <input type="radio" id="wedding" name="event" value="Wedding">
+      <label for="wedding">Wedding (💐 Floral setup + Drapes)</label>
+      <img src="C:\Users\hp\Downloads\wed.jpeg" alt="Wedding Decoration">
+    </div>
+
+    <button type="submit">Confirm Decoration</button>
+  </form>
+
+  <script>
+    function showAlert(event) {
+      event.preventDefault();
+      const selected = document.querySelector('input[name="event"]:checked');
+      if (selected) {
+        alert(`You selected: ${selected.value} decoration!`);
+      } else {
+        alert("Please select a decoration option.");
+      }
+    }
+  </script>
+</body>
+</html>

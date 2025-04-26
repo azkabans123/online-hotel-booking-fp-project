@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel Booking</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background: #f5f8fa;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  header, footer {
+    background: #1e3a5f;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 25px 0;
+  }
+
+  .search-bar input, .search-bar button, .search-bar select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    min-width: 150px;
+    font-size: 14px;
+  }
+#review-form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+#review-form input, #review-form select, #review-form textarea, #review-form button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#review-form button {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#review-form button:hover {
+  background-color: #005fa3;
+}
+
+.reviews-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-item {
+  background: #f9f9f9;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 5px solid #2ecc71;
+}
+
+.review-item h3 {
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.review-rating {
+  color: #f39c12;
+  font-weight: bold;
+}
+
+
+  .search-bar button {
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .search-bar button:hover {
+    background-color: #005fa3;
+  }
+
+  .nav-links {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .nav-links a {
+    background: #0077cc;
+    color: white;
+    text-decoration: none;
+    margin: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    display: inline-block;
+    transition: background 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    background: #005fa3;
+  }
+
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .card .info {
+    padding: 15px;
+    text-align: left;
+  }
+
+  .card button {
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .card button:hover {
+    background-color: #005fa3;
+  }
+
+  .modal, #customizeModal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto; /* Adjusted margin to move the modal higher */
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 26px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.modal-content input, .modal-content select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.modal-content button {
+  background-color: #0077cc;
+  color: white;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #005fa3;
+}
+  .contact-container, .discounts-container, .reviews-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    padding: 25px;
+    max-width: 700px;
+    margin: 30px auto;
+  }
+
+  .discount-item {
+    background: #eaf4fc;
+    border-left: 5px solid #0077cc;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .discount-item:hover {
+    background: #d6ebfc;
+  }
+
+  .review-item {
+    background: #fefefe;
+    border-left: 5px solid #2ecc71;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+
+  .review-item h3 {
+    margin-bottom: 6px;
+    color: #1e3a5f;
+  }
+
+  .review-rating {
+    color: #f39c12;
+    font-weight: bold;
+  }
+
+  .option-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .option {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: border 0.3s ease;
+  }
+
+  .option:hover, .option.selected {
+    border: 2px solid #0077cc;
+  }
+
+  .option img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+  }
+
+  .option p {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Twilight Hotel Booking</h1>
+    <div class="search-bar">
+      <select id="citySelect">
+        <option value="">All Rooms</option>
+        <option value="New York">Goa</option>
+        <option value="Los Angeles">Hyderabad</option>
+        <option value="Chicago">Vijayawada</option>
+        <option value="Miami">Vizag</option>
+        <option value="San Francisco">Guntur</option>
+      </select>
+      <button id="searchButton">Search Location</button>
+    </div>
+    <nav class="nav-links">
+      <a id="homeLink">Home</a>
+      <a id="contactLink">Contact</a>
+      <a id="discountsLink">Discounts</a>
+      <a id="reviewsLink">Reviews</a> <!-- New link for reviews -->
+      <!-- Add this inside your <body> tag -->
+<div style="margin-top: 20px;">
+  <a href="dec.html" target="_blank">
+    <button style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+      🎉 Choose Room Decoration
+    </button>
+  </a>
+</div>
+
+ </a>
+
+    </nav>
+  </header>
+
+  <!-- Content area -->
+  <section id="contentArea" class="cards-container"></section>
+
+  <footer>
+    <p>&copy; 2025 Hotel Booking | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Book Room</h2>
+      <form id="bookingForm">
+        <label>Room Type:</label>
+        <input type="text" id="roomType" readonly />
+        <label>Price per night:</label>
+        <input type="text" id="roomPrice" readonly />
+        <label>Your Name:</label>
+        <input type="text" id="userName" required />
+        <label>Your Email:</label>
+        <input type="email" id="userEmail" required />
+        <label>Payment Method:</label>
+        <select id="paymentMethod" required>
+          <option value="">Select</option>
+          <option value="Credit Card">Credit Card</option>
+          <option value="Debit Card">Debit Card</option>
+          <option value="UPI">UPI</option>
+          <option value="Cash on Arrival">Cash on Arrival</option>
+        </select>
+        <button type="submit">Confirm Booking</button>
+<br><br>
+        <button onclick="openCustomizeModal('Room 1')">Customizations</button>
+
+      </form>
+    </div>
+  </div>
+<div class="modal" id="customizeModal">
+  <div class="modal-content">
+    <span class="close" id="closeCustomizeModal">&times;</span>
+    <h2>Available Customizations</h2>
+    <br>
+    <br>
+    
+    <!-- Breakfast Selection -->
+    <div>
+      <h3>Select Breakfast:</h3>
+      <div class="option-group" id="breakfastOptions">
+        <div class="option">
+          <img src="https://i.sstatic.net/qVLgQ.jpg" alt="Continental Breakfast" id="continental">
+          <p>Continental Breakfast</p>
+        </div>
+        <div class="option">
+          <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2019/02/full-english-7355w-2.jpg" alt="English Breakfast" id="english">
+          <p>English Breakfast</p>
+        </div>
+        <div class="option">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbkLwSlYBNYs_lRJF0KQVEr2nx78wb3063tg&s" alt="Vegetarian Breakfast" id="vegetarian">
+          <p>Vegetarian Breakfast</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Spa Package Selection -->
+    <div>
+      <h3>Select Spa Package:</h3>
+      <div class="option-group" id="spaOptions">
+        <div class="option">
+          <img src="C:\Users\hp\Downloads\s.jpeg" alt="Relaxation Package" id="relaxation">
+          <p>Relaxation Package</p>
+        </div>
+        <div class="option">
+          <img src="C:\Users\hp\Downloads\lux.jpeg" alt="Luxury Spa" id="luxury">
+          <p>Luxury Spa</p>
+        </div>
+        <div class="option">
+          <img src="C:\Users\hp\Downloads\r.jpeg" alt="Rejuvenation Spa" id="rejuvenation">
+          <p>Rejuvenation Spa</p>
+        </div>
+      </div>
+    </div>
+    
+    <button onclick="confirmCustomization()">Confirm Customization</button>
+  </div>
+</div>
+
+
+  <script>
+    const contentArea = document.getElementById('contentArea');
+    const homeLink = document.getElementById('homeLink');
+    const contactLink = document.getElementById('contactLink');
+    const discountsLink = document.getElementById('discountsLink');
+    const reviewsLink = document.getElementById('reviewsLink'); // New
+    const citySelect = document.getElementById('citySelect');
+    const bookingModal = document.getElementById('bookingModal');
+    const closeModal = document.getElementById('closeModal');
+    const roomType = document.getElementById('roomType');
+    const roomPrice = document.getElementById('roomPrice');
+    const bookingForm = document.getElementById('bookingForm');
+
+    const rooms = [
+      { name: "Deluxe", price: 900, img: "https://www.thelalit.com/wp-content/uploads/2024/10/DeluxeRoom-A.jpg", city: "New York" },
+      { name: "Suite", price: 1000, img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/b0/b8/60/suite-hotels.jpg?w=1200&h=-1&s=1", city: "Los Angeles" },
+      { name: "Standard", price: 700, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoliCXz0LOqHi5L9I2EN11IZv30_rKDcraig&s", city: "Chicago" },
+      { name: "Luxury", price: 2000, img: "https://plus.unsplash.com/premium_photo-1661876306620-f2f2989f8f8b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bHV4dXJ5JTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D", city: "Miami" },
+      { name: "Family", price: 1200, img: "https://thejohnstownestate.com/wp-content/uploads/2020/10/Family-Room-_1200X800.jpg", city: "San Francisco" },
+      { name: "Budget", price: 500, img: "https://htl-img-res-new.s3.ap-south-1.amazonaws.com/1985/20210728/main.jpg", city: "Los Angeles" },
+      { name: "Ocean View", price: 1500, img: "https://www.azurabermuda.com/wp-content/uploads/2023/02/Ocean-View-Guest-Room-1680x1120.jpg", city: "New York" },
+      { name: "Single room", price: 4000, img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c", city: "Chicago" }
+    ];
+
+    // Add some dummy reviews for testing
+    const reviews = [
+      { name: "Ishani Kapoor", rating: 5, comment: "Amazing stay! Highly recommend this hotel!" },
+      { name: "Karan Luthra", rating: 4, comment: "Very good service, but the room could be cleaner." },
+      { name: "Preeta sharma", rating: 3, comment: "Decent stay. Could use some improvements." },
+      { name: "Kartik Goenka", rating: 5, comment: "The hotel exceeded my expectations, would definitely stay again!" },
+    ];
+
+    function renderRooms(filteredRooms = rooms) {
+      contentArea.className = 'cards-container';
+      contentArea.innerHTML = '';
+      if (filteredRooms.length === 0) {
+        contentArea.innerHTML = '<p>No rooms found matching your search.</p>';
+        return;
+      }
+      filteredRooms.forEach(room => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${room.img}" alt="${room.name}">
+          <div class="info">
+            <h3>${room.name}</h3>
+            <p>Price: ₹${room.price}/night</p>
+            <button onclick="openBooking('${room.name}', ${room.price})">Book Now</button>
+          </div>
+        `;
+        contentArea.appendChild(card);
+      });
+    }
+
+    function renderReviews() {
+      contentArea.className = '';
+      let html = `<div class="reviews-container"><h2>Customer Reviews</h2>`;
+      reviews.forEach(review => {
+        html += `
+          <div class="review-item">
+            <h3>${review.name}</h3>
+            <p class="review-rating">Rating: ${'⭐'.repeat(review.rating)}</p>
+            <p>${review.comment}</p>
+          </div>
+        `;
+      });
+      html += `</div>`;
+      contentArea.innerHTML = html;
+    }
+
+    function openBooking(name, price) {
+      roomType.value = name;
+      roomPrice.value = `₹${price}/night`;
+      bookingModal.style.display = "block";
+    }
+
+    function closeBooking() {
+      bookingModal.style.display = "none";
+    }
+
+    closeModal.onclick = closeBooking;
+
+    bookingForm.onsubmit = function(event) {
+      event.preventDefault();
+      const userName = document.getElementById('userName').value;
+      const userEmail = document.getElementById('userEmail').value;
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      
+      alert(`Booking confirmed! \nName: ${userName} \nEmail: ${userEmail} \nRoom: ${roomType.value} \nPayment Method: ${paymentMethod}`);
+      closeBooking();
+    };
+
+    homeLink.onclick = () => renderRooms();
+    contactLink.onclick = () => {
+      contentArea.className = '';
+      contentArea.innerHTML = `
+        <div class="contact-container">
+          <h2>Contact Us</h2>
+          <p><strong>Main Branch:</strong> 123 Hotel Street, Hyderabad, India</p>
+          <p><strong>Email:</strong> contact@twilighthotelbooking.com</p>
+          <p><strong>Phone:</strong> +1 234 567 8900</p>
+          <p><strong>Working Hours:</strong> 9:00 AM - 8:00 PM</p>
+        </div>
+      `;
+    };
+
+    discountsLink.onclick = () => {
+      contentArea.className = '';
+      contentArea.innerHTML = `
+        <div class="discounts-container">
+          <h2>Special Discounts</h2>
+          <div class="discount-item" onclick="applyDiscount('summer')">
+            <h3>Summer Special</h3>
+            <p>Get 20% off on all Deluxe rooms booked before July 31st.</p>
+          </div>
+          <div class="discount-item" onclick="applyDiscount('family')">
+            <h3>Family Package</h3>
+            <p>Book 3 nights in a Family room and get 1 night free.</p>
+          </div>
+          <div class="discount-item" onclick="applyDiscount('ocean')">
+            <h3>Ocean View Deal</h3>
+            <p>Enjoy 15% discount on Ocean View rooms for weekend stays.</p>
+          </div>
+          <div class="discount-item" onclick="applyDiscount('weekend')">
+            <h3>Weekend Special</h3>
+            <p>20% off for weekend stays (Friday - Sunday).</p>
+          </div>
+        </div>
+      `;
+    };
+
+    reviewsLink.onclick = () => renderReviews();
+
+    function applyDiscount(type) {
+      let discountedRooms = [];
+
+      if (type === 'summer') {
+        discountedRooms = rooms.filter(r => r.name.toLowerCase() === 'deluxe')
+          .map(r => ({ ...r, price: r.price * 0.8 }));
+      }
+
+      if (type === 'family') {
+        discountedRooms = rooms.filter(r => r.name.toLowerCase() === 'family');
+      }
+
+      if (type === 'ocean') {
+        discountedRooms = rooms.filter(r => r.name.toLowerCase() === 'ocean view')
+          .map(r => ({ ...r, price: r.price * 0.85 }));
+      }
+
+      if (type === 'weekend') {
+        discountedRooms = rooms.map(r => ({ ...r, price: r.price * 0.8 }));
+      }
+
+      renderRooms(discountedRooms);
+      alert("Discount Applied! Rooms updated with special pricing.");
+    }
+
+    citySelect.onchange = function() {
+      const selectedCity = citySelect.value;
+      const filteredRooms = selectedCity
+        ? rooms.filter(room => room.city === selectedCity)
+        : rooms;
+
+      renderRooms(filteredRooms);
+    };
+
+    // Initial load
+    renderRooms();
+function renderReviews() {
+  contentArea.className = '';
+  let html = `
+    <div class="reviews-container">
+      <h2>Customer Reviews</h2>
+      <form id="review-form" onsubmit="submitReview(event)">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <select id="rating" required>
+          <option value="">Rating</option>
+          <option value="1">1 Star</option>
+          <option value="2">2 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="5">5 Stars</option>
+        </select>
+        <textarea id="comment" placeholder="Your Review" required></textarea>
+        <button type="submit">Submit Review</button>
+      </form>
+      <div id="reviews-list">
+  `;
+
+  reviews.forEach(review => {
+    html += `
+      <div class="review-item">
+        <h3>${review.name}</h3>
+        <p class="review-rating">Rating: ${'⭐'.repeat(review.rating)}</p>
+        <p>${review.comment}</p>
+      </div>
+    `;
+  });
+
+  html += `</div></div>`;
+  contentArea.innerHTML = html;
+}
+function submitReview(event) {
+  event.preventDefault(); // Prevent the form from reloading the page
+  
+  const name = document.getElementById('name').value;
+  const rating = parseInt(document.getElementById('rating').value);
+  const comment = document.getElementById('comment').value;
+
+  if (name && rating && comment) {
+    reviews.push({ name, rating, comment });
+    document.getElementById('review-form').reset(); // Clear the form
+    renderReviews(); // Re-render the reviews after submission
+  } else {
+    alert('Please fill in all fields.');
+  }
+}
+
+
+  // Modal for customization
+  const customizeModal = document.getElementById('customizeModal');
+  const closeCustomizeModal = document.getElementById('closeCustomizeModal');
+
+  // Open the customization modal when clicking "Customize Room"
+  function openCustomizeModal(roomName) {
+    customizeModal.style.display = "block";
+  }
+
+  // Close the customization modal
+  closeCustomizeModal.onclick = function() {
+    customizeModal.style.display = "none";
+  }
+
+  // Handle image selection for breakfast
+  document.querySelectorAll('#breakfastOptions .option').forEach(option => {
+    option.onclick = function() {
+      document.querySelectorAll('#breakfastOptions .option').forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+    };
+  });
+
+  // Handle image selection for spa packages
+  document.querySelectorAll('#spaOptions .option').forEach(option => {
+    option.onclick = function() {
+      document.querySelectorAll('#spaOptions .option').forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+    };
+  });
+
+  // Handle the confirmation of customization
+  function confirmCustomization() {
+    const selectedBreakfast = document.querySelector('#breakfastOptions .selected p')?.innerText || 'None';
+    const selectedSpa = document.querySelector('#spaOptions .selected p')?.innerText || 'None';
+    
+    alert(`Customization Confirmed! \nBreakfast: ${selectedBreakfast} \nSpa: ${selectedSpa}`);
+    
+    // Close the modal after customization
+    customizeModal.style.display = "none";
+  }
+
+
+  </script>
+</body>
+</html>
